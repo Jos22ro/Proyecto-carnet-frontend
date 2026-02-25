@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Carnet Comunitario - Paleta Institucional */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 13%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 13%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 13%;
+
+    /* Azul Profundo Institucional */
+    --primary: 214 62% 26%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Verde Tierra - Éxito */
+    --secondary: 122 39% 49%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Fondos suaves */
+    --muted: 210 20% 96%;
+    --muted-foreground: 0 0% 40%;
+
+    /* Amarillo Dorado - Pendiente/Acento */
+    --accent: 51 100% 50%;
+    --accent-foreground: 0 0% 13%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 20% 88%;
+    --input: 214 20% 88%;
+    --ring: 214 62% 26%;
+
+    --radius: 0.5rem;
+
+    /* Estados específicos */
+    --status-pending: 51 100% 50%;
+    --status-approved: 122 39% 49%;
+    --status-rejected: 0 0% 62%;
+
+    /* Categorías */
+    --category-pets: 280 60% 55%;
+    --category-business: 214 62% 26%;
+    --category-global: 180 50% 40%;
+
+    /* Sidebar */
+    --sidebar-background: 214 62% 26%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 214 62% 26%;
+    --sidebar-accent: 214 62% 32%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 214 62% 35%;
+    --sidebar-ring: 0 0% 100%;
+  }
+
+  .dark {
+    --background: 214 62% 10%;
+    --foreground: 0 0% 98%;
+    --card: 214 62% 14%;
+    --card-foreground: 0 0% 98%;
+    --popover: 214 62% 14%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 214 62% 26%;
+    --secondary: 122 39% 49%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 214 30% 18%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 51 100% 50%;
+    --accent-foreground: 0 0% 13%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 30% 25%;
+    --input: 214 30% 25%;
+    --ring: 0 0% 100%;
+    --sidebar-background: 214 62% 12%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 51 100% 50%;
+    --sidebar-primary-foreground: 0 0% 13%;
+    --sidebar-accent: 214 62% 20%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 214 62% 22%;
+    --sidebar-ring: 51 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .status-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .status-pending {
+    background-color: hsl(51 100% 50% / 0.2);
+    color: hsl(45 100% 35%);
+    border: 1px solid hsl(51 100% 50% / 0.4);
+  }
+
+  .status-approved {
+    background-color: hsl(122 39% 49% / 0.15);
+    color: hsl(122 39% 35%);
+    border: 1px solid hsl(122 39% 49% / 0.4);
+  }
+
+  .status-rejected {
+    background-color: hsl(0 0% 62% / 0.15);
+    color: hsl(0 0% 40%);
+    border: 1px solid hsl(0 0% 62% / 0.4);
+  }
+
+  .category-icon {
+    @apply w-8 h-8 rounded-lg flex items-center justify-center text-lg;
+  }
+
+  .card-hover {
+    @apply transition-all duration-200 hover:shadow-md hover:-translate-y-0.5;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-in {
+    animation: slideIn 0.25s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}

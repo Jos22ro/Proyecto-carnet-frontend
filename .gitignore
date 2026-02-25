@@ -1,0 +1,38 @@
+# Dependencias (Nunca se suben, son pesadísimas)
+node_modules/
+jspm_packages/
+
+# Build / Producción (Archivos generados al compilar)
+dist/
+build/
+out/
+
+# Variables de entorno (¡CRÍTICO! Aquí van tus llaves secretas)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor/IDE (Configuraciones personales de tu VS Code o JetBrains)
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Testing
+/coverage
+
+# Sistema Operativo
+.DS_Store
+Thumbs.db
