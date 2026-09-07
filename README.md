@@ -1,73 +1,112 @@
-# Welcome to your Lovable project
+Carnet Comunitario — Manager (Frontend)
+Panel de administración web del Carnet Comunitario, el sistema de gestión de identificaciones comunitarias de la Alcaldía de San Diego (Carabobo, Venezuela). Permite administrar solicitudes de carnets de emprendedores, mascotas y registros ciudadanos (global), desde su recepción vía Google Forms hasta su aprobación y entrega.
 
-## Project info
+🌐 Demo en producción: carnet-comunitario-manager.vercel.app
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+🔧 Backend (API REST): github.com/Jos22ro/Proyecto-carnet-backend
 
-## How can I edit this code?
+📄 Documentación del webhook de Google Forms: ver GOOGLE_FORMS_SETUP.md en el repositorio del backend
 
-There are several ways of editing your application.
+✨ Características
+Autenticación JWT con contexto global (AuthContext) y rutas protegidas (ProtectedRoute)
+Dashboard con métricas de solicitudes y navegación por tipo: emprendedores, mascotas y global
+Gestión CRUD completa de solicitudes con filtros por estado (pendiente / aprobado / rechazado), origen y búsqueda por email
+Exportación de reportes a Excel por tipo de solicitud (ReporteExcelFilter)
+Formularios validados con react-hook-form + zod (resolvers tipados)
+Gestión de estado de servidor con TanStack React Query (caché, invalidación y mutaciones)
+UI componetizada con shadcn/ui (Radix UI), Tailwind CSS y lucide-react
+Gestión de usuarios con roles de administrador (RegisterUserPage)
+🛠 Stack técnico
+Capa
+Tecnologías
+Framework	React 18, TypeScript, Vite 5
+UI	Tailwind CSS, shadcn/ui (Radix UI), lucide-react
+Datos	Axios, TanStack React Query, react-hook-form, Zod
+Routing	React Router v6
+Calidad	ESLint, TypeScript ESLint, Vitest, Testing Library
 
-**Use Lovable**
+🏗 Arquitectura
+text
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+src/
+├── components/
+│   ├── layout/          # MainLayout, navegación
+│   ├── dialogs/         # Diálogos de gestión
+│   ├── ui/              # Componentes shadcn/ui
+│   ├── LoginForm.tsx    # Autenticación
+│   └── ReporteExcelFilter.tsx   # Exportación a Excel
+├── contexts/
+│   └── AuthContext.tsx  # Estado global de autenticación JWT
+├── hooks/
+│   ├── useSolicitudes.ts  # React Query: solicitudes
+│   └── useEntities.ts     # React Query: entidades
+├── pages/
+│   ├── Dashboard.tsx        # Panel principal
+│   ├── MascotasPage.tsx     # Solicitudes de mascotas
+│   ├── EmprendedoresPage.tsx # Solicitudes de emprendedores
+│   └── RegisterUserPage.tsx # Registro de usuarios
+├── services/
+│   └── api.ts           # Cliente Axios (JWT interceptado)
+├── types/               # Tipos TypeScript compartidos
+└── test/                # Configuración Vitest
+Flujo de datos del sistema:
 
-Changes made via Lovable will be committed automatically to this repo.
+text
 
-**Use your preferred IDE**
+Google Forms ──► Apps Script ──► Webhook API (Render) ──► MySQL (Aiven)
+                                                        │
+                 PDF + QR (PDFKit) ◄────────────────────┘
+                            │
+                 Email con carnet (Nodemailer)
+                            │
+        Personal municipal ◄──► Este panel (Vercel) ──► API REST
+🚀 Puesta en marcha
+Requisitos: Node.js 18+ y npm
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+bash
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# 1. Clonar
+git clone https://github.com/Jos22ro/Proyecto-carnet-frontend.git
+cd Proyecto-carnet-frontend
 
-Follow these steps:
+# 2. Instalar dependencias
+npm install
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# 3. Configurar variables de entorno
+cp .env.example .env
+# Editar VITE_API_URL con la URL de tu backend
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# 4. Desarrollo
+npm run dev        # http://localhost:5173
 
-# Step 3: Install the necessary dependencies.
-npm i
+# 5. Producción
+npm run build      # genera dist/
+npm run preview    # previsualizar el build
+⚙️ Variables de entorno
+Variable
+Descripción
+Ejemplo
+VITE_API_URL	URL base de la API REST	http://localhost:3001
+VITE_APP_NAME	Nombre de la aplicación	Carnet Comunitario Manager
+VITE_API_TIMEOUT	Timeout de peticiones en ms	30000
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+Las variables VITE_* se exponen en el bundle del cliente por diseño; nunca coloques secretos aquí.
 
-**Edit a file directly in GitHub**
+☁️ Despliegue
+Componente
+Servicio
+Nota
+Frontend	Vercel	Build npm run build, output dist/
+Backend API	Render	Ver repo del backend
+Base de datos	MySQL en Aiven	Conexión con SSL/TLS obligatorio
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+El CORS del backend está restringido al dominio de producción en Vercel (credentials: true).
 
-**Use GitHub Codespaces**
+🔒 Seguridad
+Sesiones mediante JWT emitido por la API; el token viaja en el header Authorization
+Rutas de administración protegidas en el cliente (ProtectedRoute) y en la API (middleware de autenticación)
+Sin secretos en el código del cliente: toda credencial vive en variables de entorno del backend
+📸 Capturas
+Pendiente: agregar capturas del dashboard, gestión de emprendedores/mascotas y exportación de reportes.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Desarrollado por Jos22ro · ¿Consultas o sugerencias? Abre un issue
